@@ -4,7 +4,7 @@
     include_once("helpers/functions.php");
 
     $usersData = getAllUsersData($con);
-    $userDataCount = mysqli_num_rows($usersData);
+
 ?>
 
 <html>
@@ -36,19 +36,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?if ($userDataCount > 0){?>
-                <?php while ($userData = mysqli_fetch_assoc($usersData)){?>
-                    <tr>
-                        <th><?=$userData['id']?></th>
-                        <td><?=$userData['username']?></td>
-                        <td><?=$userData['team_name']?></td>
-                    </tr>
-                <?}?>
-                <?}else{?>
+                <?php if ($usersData['count'] > 0 && !empty($usersData['data']) ): ?>
+                    <?php foreach ($usersData['data'] as $userData ): ?>
+                        <tr>
+                            <th><?=$userData['id']?></th>
+                            <td><?=$userData['username']?></td>
+                            <td><?=$userData['team_name']?></td>
+                        </tr>
+                    <?php endforeach;?>
+                <?php else: ?>
                     <tr>
                         <th colspan="3" class="text-center">No Data Found</th>
                     </tr>
-                <?}?>
+                <?php endif;?>
                 </tbody>
             </table>
         </div>
